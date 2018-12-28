@@ -13,16 +13,20 @@ const Container = ({ children }) => {
 				collapsible
 				collapsed={collapsed}
 			>
-				<Menu theme='dark' mode='inline' defaultSelectedKeys={['1']}>
-					<Menu.Item key='1'>
-						<Icon type='form' />
-						Cadastro
+				<Menu theme='dark' mode='inline'>
+					<Menu.Item key='Cadastro'>
+						<Item
+							text='Cadastro'
+							to='/add'
+							icon='form'
+						/>
 					</Menu.Item>
-					<Menu.Item key='2'>
-						<Link to='/list'>
-							<Icon type='bars' />
-							Listagem
-						</Link>
+					<Menu.Item key='Listagem'>
+						<Item
+							text='Listagem'
+							to='/list'
+							icon='bars'
+						/>
 					</Menu.Item>
 				</Menu>
 			</Sider>
@@ -41,6 +45,13 @@ const Container = ({ children }) => {
 		</Layout>
 	)
 }
+
+const Item = ({ to, icon, text }) => (
+	<Link to={to}>
+		<Icon type={icon} />
+		<span>{text}</span>
+	</Link>
+)
 
 const styles = StyleSheet.create({
 	main: {

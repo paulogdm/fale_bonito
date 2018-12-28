@@ -1,19 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Input, Row, Col, message, Button, Alert } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import firebase from '../firebase'
+import { wordsRef } from '../services/firestoneServices'
+import get from 'lodash.get'
 
 
 const FormAdd = props => {
 	const [word, setWord] = useState()
 	const [description, setDescription] = useState()
+	const [id, setID] = useState()
+
+	useEffect(() => {
+		getFormData()
+	}, [])
+
+	const getFormData = async () => {
+		const { id } = get(props, 'location.state', '')
+		if (!id) return
+
+		const x = await wordsRef.doc(id).get()
+		if (!x.exists) return
+
+		const { word, description } = x.data()
+
+		setWord(word)
+		setDescription(description)
+		setID(id)
+	}
 
 	const submit = async e => {
 		e.preventDefault()
 		if (!isValid()) return
 		try {
-			await firebase.firestore().collection('words').add({ word, description })
+			id
+				? await wordsRef.doc(id).set({ word, description })
+				: await wordsRef.add({ word, description })
 			message.success('Palavra salva!')
+			props.history.push('/list')
 		} catch (error) {
 			message.error(error)
 		}
