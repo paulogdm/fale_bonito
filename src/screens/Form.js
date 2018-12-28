@@ -9,6 +9,7 @@ const FormAdd = props => {
 	const [word, setWord] = useState()
 	const [description, setDescription] = useState()
 	const [id, setID] = useState()
+	const [isSubmitting, setSubmitting] = useState(false)
 
 	useEffect(() => {
 		getFormData()
@@ -18,10 +19,10 @@ const FormAdd = props => {
 		const { id } = get(props, 'location.state', '')
 		if (!id) return
 
-		const x = await wordsRef.doc(id).get()
-		if (!x.exists) return
+		const form = await wordsRef.doc(id).get()
+		if (!form.exists) return
 
-		const { word, description } = x.data()
+		const { word, description } = form.data()
 
 		setWord(word)
 		setDescription(description)
@@ -31,6 +32,7 @@ const FormAdd = props => {
 	const submit = async e => {
 		e.preventDefault()
 		if (!isValid()) return
+		setSubmitting(true)
 		try {
 			id
 				? await wordsRef.doc(id).set({ word, description })
@@ -47,6 +49,7 @@ const FormAdd = props => {
 	const resetForm = () => {
 		setDescription()
 		setWord()
+		setSubmitting(false)
 	}
 
 	const isValid = () => {
@@ -91,6 +94,8 @@ const FormAdd = props => {
 								htmlType='submit'
 								disabled={!word || !description}
 								block
+								icon='check'
+								loading={isSubmitting}
 							>
 								Cadastrar!
           		</Button>
@@ -112,7 +117,7 @@ const HelperMessage = () => (
 		message='Opa!'
 		description={
 			<span>Se está sem criatividade,
-					<a href='https://www.normaculta.com.br/palavras-dificeis/'>dá uma olhada aqui</a>
+					<a href='https://www.normaculta.com.br/palavras-dificeis/' target='_tab'>dá uma olhada aqui</a>
 			</span>
 		}
 		type='warning'

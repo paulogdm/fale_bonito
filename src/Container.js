@@ -34,9 +34,13 @@ const Container = ({ children }) => {
 				<Header className={css(styles.header)}>
 					<Icon
 						className='trigger'
-						type={collapsed ? 'menu-unfold' : 'menu-fold'}
+						type={collapsed ? 'right-circle' : 'left-circle'}
 						onClick={() => setCollapsed(!collapsed)}
+						theme='twoTone'
 					/>
+					<span className={css(styles.headerText)}>
+						{collapsed ? 'Expandir Menu' : 'Retrair Menu'}
+					</span>
 				</Header>
 				<Content className={css(styles.content)}>
 					{children}
@@ -65,7 +69,11 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		background: '#fff',
-		padding: 0
+		fontSize: 20,
+		padding: '0 0 0 10px'
+	},
+	headerText: {
+		marginLeft: 10
 	}
 })
 

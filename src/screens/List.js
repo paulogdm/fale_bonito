@@ -38,10 +38,9 @@ const ListItems = props => {
 		props.history.push('/add', { id })
 	}
 
-
 	return (
 		<List
-			grid={{ column: 4, gutter: 16 }}
+			grid={{ gutter: 10 }}
 			dataSource={list}
 			renderItem={item => (
 				<List.Item>
@@ -64,7 +63,6 @@ const ListItems = props => {
 							>
 								<Icon type='delete' />
 							</Popconfirm>
-
 						]}
 					>
 						{item.description}
