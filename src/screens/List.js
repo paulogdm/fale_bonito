@@ -40,7 +40,7 @@ const ListItems = props => {
 
 	return (
 		<List
-			grid={{ gutter: 10 }}
+			grid={{ column: 4, gutter: 10 }}
 			dataSource={list}
 			renderItem={item => (
 				<List.Item>
@@ -75,8 +75,9 @@ const ListItems = props => {
 
 const styles = StyleSheet.create({
 	card: {
-		width: 200,
-		textAlign: 'center'
+		width: 250,
+		textAlign: 'center',
+		boxShadow: '4px 4px 9px 1px #d2d2d2'
 	}
 })
 
