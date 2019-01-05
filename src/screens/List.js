@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { List, Card, Icon, Popconfirm, message } from 'antd'
 import { StyleSheet, css } from 'aphrodite'
+
 import { wordsRef } from '../services/firestoneServices'
 
 const ListItems = props => {

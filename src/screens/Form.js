@@ -33,10 +33,16 @@ const FormAdd = props => {
 		e.preventDefault()
 		if (!isValid()) return
 		setSubmitting(true)
+
 		try {
+			const formatedForm = {
+				word: capitalize(word),
+				description: capitalize(description)
+			}
+
 			id
-				? await wordsRef.doc(id).set({ word, description })
-				: await wordsRef.add({ word, description })
+				? await wordsRef.doc(id).set(formatedForm)
+				: await wordsRef.add(formatedForm)
 			message.success('Palavra salva!')
 			props.history.push('/list')
 		} catch (error) {
@@ -57,6 +63,10 @@ const FormAdd = props => {
 			return false
 		return true
 	}
+
+	const validate = word => word !== undefined ? word.length ? 'success' : 'error' : ''
+
+	const capitalize = word => word.replace(word[0], word[0].toUpperCase())
 
 	return (
 		<>
@@ -127,5 +137,3 @@ const HelperMessage = () => (
 )
 
 export default FormAdd
-const validate = string => string !== undefined ? string.length ? 'success' : 'error' : ''
-

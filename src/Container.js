@@ -1,17 +1,31 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, Input } from 'antd'
 import { StyleSheet, css } from 'aphrodite'
+import { wordsRef } from './services/firestoneServices'
+
 const { Header, Sider, Content } = Layout
 
 const Container = ({ children }) => {
+
+	const search = async value => {
+		const x = await wordsRef
+			.orderBy('word')
+			.startAt(value)
+			.endAt(`${value}\uf8ff`)
+			.get()
+		x.forEach(z => {
+			console.log(z.data())
+		})
+	}
+
 	const [collapsed, setCollapsed] = useState(false)
 	return (
 		<Layout className={css(styles.main)}>
 			<Sider
-				trigger={null}
-				collapsible
 				collapsed={collapsed}
+				collapsible
+				trigger={null}
 			>
 				<Menu theme='dark' mode='inline'>
 					<Menu.Item key='Cadastro'>
@@ -32,15 +46,20 @@ const Container = ({ children }) => {
 			</Sider>
 			<Layout>
 				<Header className={css(styles.header)}>
-					<Icon
-						className='trigger'
-						type={collapsed ? 'right-circle' : 'left-circle'}
-						onClick={() => setCollapsed(!collapsed)}
-						theme='twoTone'
-					/>
-					<span className={css(styles.headerText)}>
-						{collapsed ? 'Expandir Menu' : 'Retrair Menu'}
-					</span>
+					<div className={css(styles.headerText)}>
+						<Icon
+							className='trigger'
+							type={collapsed ? 'right-circle' : 'left-circle'}
+							onClick={() => setCollapsed(!collapsed)}
+							theme='filled'
+						/>
+						<span onClick={() => setCollapsed(!collapsed)}>
+							{collapsed ? 'Expandir Menu' : 'Retrair Menu'}
+						</span>
+					</div>
+					<div className={css(styles.search)}>
+						<Input onChange={e => search(e.target.value)} />
+					</div>
 				</Header>
 				<Content className={css(styles.content)}>
 					{children}
@@ -49,6 +68,7 @@ const Container = ({ children }) => {
 		</Layout>
 	)
 }
+
 
 const Item = ({ to, icon, text }) => (
 	<Link to={to}>
@@ -68,12 +88,18 @@ const styles = StyleSheet.create({
 		minHeight: 280
 	},
 	header: {
+		display: 'flex',
+		justifyContent: 'space-between',
 		background: '#fff',
-		fontSize: 20,
-		padding: '0 0 0 10px'
+		fontSize: 18,
+		padding: '15px 16px 0 10px'
 	},
 	headerText: {
-		marginLeft: 10
+		margin: '-15px 0 0 0',
+		cursor: 'pointer'
+	},
+	search: {
+		width: '50vw'
 	}
 })
 
