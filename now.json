@@ -10,7 +10,7 @@
 			"config": {
 				"distDir": "build"
 			}
-		}
+    }
 	],
 	"routes": [
 	  {"src": "^/static/(.*)", "dest": "/static/$1"},
