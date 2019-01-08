@@ -6,7 +6,7 @@ import { wordsRef } from './services/firestoneServices'
 
 const { Header, Sider, Content } = Layout
 
-const Container = ({ children }) => {
+const Container = props => {
 
 	const search = async value => {
 		const x = await wordsRef
@@ -62,7 +62,7 @@ const Container = ({ children }) => {
 					</div>
 				</Header>
 				<Content className={css(styles.content)}>
-					{children}
+					{props.children}
 				</Content>
 			</Layout>
 		</Layout>
