@@ -17,10 +17,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"now-build": "react-scripts build && mv build dist",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"now": "yarn build && cd ./build && cp ../now.json . && rm static/js/*.map && now && now alias"
+		"now-build": "react-scripts build",
+		"test": "react-scripts test"
 	},
 	"browserslist": [
 		">0.2%",
